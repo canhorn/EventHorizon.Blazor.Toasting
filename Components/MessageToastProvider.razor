@@ -1,0 +1,12 @@
+﻿@inherits MessageToastProviderModel
+
+<CascadingValue Value="this">
+    @ChildContent
+</CascadingValue>
+
+<div class="toast-container --show">
+    @foreach (var message in MessageList.Values.OrderBy(a => a.Timestamp))
+    {
+        <MessageToastDisplay @key="message.Id" Message="message" OnRemove="HandleRemoveMessage" />
+    }
+</div>

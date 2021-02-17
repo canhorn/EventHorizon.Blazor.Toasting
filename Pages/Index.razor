@@ -1,0 +1,67 @@
+﻿@page "/"
+@using EventHorizon.Blazor.Toasting.Components
+@using EventHorizon.Blazor.Toasting.Components.Model
+
+<h1>Hello, world!</h1>
+
+Welcome to Toasting, click the buttons below to see the Magic1
+
+<div style="padding: 0.5rem">
+    <button class="btn btn-info" @onclick="ShowInfoToasting">Show an Info Toasting</button>
+</div>
+<div style="padding: 0.5rem">
+    <button class="btn btn-success" @onclick="ShowSuccessToasting">Show a Success Toasting</button>
+</div>
+<div style="padding: 0.5rem">
+    <button class="btn btn-warning" @onclick="ShowWarningToasting">Show a Warning Toasting</button>
+</div>
+<div style="padding: 0.5rem">
+    <button class="btn btn-danger" @onclick="ShowErrorToasting">Show an Error Toasting</button>
+</div>
+
+@code {
+    [CascadingParameter]
+    public MessageToastProvider MessageToastProvider { get; set; } = null!;
+
+    private void ShowToasting(
+        string heading,
+        string message,
+        MessageLevel level)
+    {
+
+        MessageToastProvider.ShowMessage(
+            new MessageModel(
+            heading,
+            message,
+            level));
+    }
+
+    private void ShowInfoToasting()
+    {
+        ShowToasting(
+            "Info Toasting",
+            "I am the Info Toasting",
+            MessageLevel.Info);
+    }
+    private void ShowSuccessToasting()
+    {
+        ShowToasting(
+            "Success Toasting",
+            "I am the Success Toasting",
+            MessageLevel.Success);
+    }
+    private void ShowWarningToasting()
+    {
+        ShowToasting(
+            "Warning Toasting",
+            "I am the Warning Toasting",
+            MessageLevel.Warning);
+    }
+    private void ShowErrorToasting()
+    {
+        ShowToasting(
+            "Error Toasting",
+            "I am an Error Level Toasting",
+            MessageLevel.Error);
+    }
+}

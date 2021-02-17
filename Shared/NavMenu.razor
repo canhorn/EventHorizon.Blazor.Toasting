@@ -1,0 +1,51 @@
+﻿@using Components
+@using Components.Model
+
+<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">Blazor Toasting</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <a class="nav-link" href="#" @onclick="ShowCounterMessage">
+                <span class="oi oi-plus" aria-hidden="true"></span> Increment Counter
+            </a>
+        </li>
+    </ul>
+</div>
+
+@code {
+    [CascadingParameter]
+    public MessageToastProvider MessageToastProvider { get; set; } = null!;
+
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    private int count = 0;
+    private void ShowCounterMessage()
+    {
+        count++;
+        var message = new MessageModel(
+            "Counter",
+            $"The Counter is at {count}",
+            MessageLevel.Warning);
+
+        MessageToastProvider.ShowMessage(
+            message);
+    }
+}
